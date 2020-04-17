@@ -5,7 +5,7 @@ app = Flask(__name__)
 api = Api(app)
 
 
-class HelloWorld(Resource):
+class HomePage(Resource):
     @staticmethod
     def get():
         return {'about': 'hello world!'}
@@ -13,18 +13,26 @@ class HelloWorld(Resource):
     @staticmethod
     def post():
         # print(request.data)
-        some_json = request.get_json()
-        return {'you sent': some_json}, 201
+        sent_data = request.get_json()
+        return {'you sent': sent_data}, 201
 
 
-class Multi(Resource):
+class Times5(Resource):
     @staticmethod
     def get(num):
-        return {'result': num*10}
+        return {'result': num*5}
 
 
-api.add_resource(HelloWorld, '/')
-api.add_resource(Multi, '/multi/<int:num>')
+class Multiply(Resource):
+    @staticmethod
+    def get(text):   # 5,5 or 10,2
+        nums = text.strip().split(',')
+        return {'result': int(nums[0]) * int(nums[1])}
+
+
+api.add_resource(HomePage, '/')
+api.add_resource(Times5, '/times5/<int:num>')
+api.add_resource(Multiply, '/multiply/<text>')
 
 
 if __name__ == '__main__':
