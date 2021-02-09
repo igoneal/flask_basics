@@ -16,6 +16,7 @@ def index():
 def get_multiply10(num):
     return jsonify({'result': num*10})
 
+print('hello')
 
 if __name__ == '__main__':
     app.run(debug=True)
